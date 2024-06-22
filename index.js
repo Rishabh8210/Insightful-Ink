@@ -2,14 +2,21 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
 const PORT = 3000;
+const cors = require('cors')
+app.use(cors());
 app.use(bodyParser.json());
 
 let blogs = []
+// app.get("/", (re1, res) => {
+//     return res.sendFile(__dirname+"/index.html")
+// })
 app.get('/blogs', (req, res) => {
     if(blogs.length > 0){
         return res.status(200).send(blogs)
     }else{
-        return res.status(200).send("No blogs found")
+        return res.status(200).json({
+            meggage: "No blogs found",
+        })
     }
 })
 
