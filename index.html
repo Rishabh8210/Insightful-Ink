@@ -22,7 +22,7 @@
       </script>
 </head>
 <body>
-    <div class="h-screen w-screen bg-sage">
+    <div class="min-h-screen w-screen bg-sage">
         <!-- Header section -->
         <header class="h-14 w-full bg-sageGreenD flex items-center p-2">
             <h2 class="text-2xl text-white uppercase font-bold">Insightful INK.</h2>
@@ -31,9 +31,9 @@
         <div class="h-fit w-full py-10 px-4">
             <p class="h-fit w-full py-2 px-4 text-white text-lg uppercase font-semibold bg-sageGreenD rounded">Add Blog</p>
             <div class="h-fit w-full flex flex-col gap-1 py-1">
-                <input class="h-11 w-full text-lg rounded px-4" type="text" placeholder="Enter title">
-                <input class="h-11 w-full text-lg rounded px-4" type="text" placeholder="Enter description">
-                <input class="h-11 w-full text-lg rounded px-4" type="text" placeholder="Enter author's name">
+                <input class="h-11 w-full text-lg rounded px-4" type="text" placeholder="Enter title" id="title">
+                <input class="h-11 w-full text-lg rounded px-4" type="text" placeholder="Enter description" id="description">
+                <input class="h-11 w-full text-lg rounded px-4" type="text" placeholder="Enter author's name" id="author">
                 <button class="h-11 w-full text-lg text-white font-semibold bg-sageGreenD rounded hover:bg-sageGreenL" onclick="saveBlogs()">ADD</button>
             </div>
         </div>
@@ -41,16 +41,11 @@
          <div class="h-fit w-full px-4">
             <p class="h-fit w-full py-2 px-4 text-white text-lg uppercase font-semibold bg-sageGreenD rounded">All Blog's</p>
             <div class="h-fit w-full py-2 flex flex-col gap-3 flex-shrink-0 blogs">
-                <div class="h-fit w-full flex items-center gap-4 py-4 px-2 border-2 border-sageGreenM">
+                <!-- <div class="h-fit w-full flex items-center gap-4 py-4 px-2 border-2 border-sageGreenM">
                     <p class="h-fit w-fit font-semibold text-xl">1.</p>
                     <p class="h-fit w-9/12 text-xl">h</p>
                     <a class="h-fit w-fit text-xlfont-semibold" href="#">Goto</a>
-                </div>
-                <div class="h-fit w-full flex items-center gap-4 py-4 px-2 border-2 border-sageGreenM">
-                    <p class="h-fit w-fit font-semibold text-xl">1.</p>
-                    <p class="h-fit w-9/12 text-xl">Fundamentals of Python programming</p>
-                    <a class="h-fit w-fit text-xlfont-semibold border-2 border-sageGreenM" href="#">Goto</a>
-                </div>
+                </div> -->
             </div>
          </div>
     </div> 
@@ -77,6 +72,33 @@
             })
         }
         getData();
+
+        function saveBlogs(){
+            let id = Math.round(Math.random(1, 10000)*1000);
+            let title = document.getElementById('title').value;
+            let description = document.getElementById('description').value;
+            let author = document.getElementById('author').value;
+            let authors = author.split(',');
+
+            fetch('http://localhost:3000/blogs', {
+                method: "POST",
+                body:JSON.stringify({
+                    id:id,
+                    title: title,
+                    description: description,
+                    author: authors
+                }),
+                headers:{
+                    "Content-type": "application/json"
+                }
+            })
+            .then((val) => {
+                return val.json()
+            })
+            .then((val) => {
+                alert(val.message)
+            })
+        }
     </script>
 </body>
 

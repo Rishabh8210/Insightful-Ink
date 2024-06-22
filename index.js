@@ -30,7 +30,7 @@ app.post('/blogs', (req, res) => {
         authors: authors
     }
     blogs.push(blogData);
-    return res.status(200).send("Blogs added successfully");
+    return res.status(200).json({message:"Blogs added successfully"});
 })
 
 app.put("/blogs/:id", (req, res) => {
